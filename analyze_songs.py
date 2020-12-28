@@ -52,10 +52,12 @@ prev_note = random.choice(parsed_notes)
 length = int(input('\nHow long do you want the composition to be? \n'))
 composition_parsed = []
 
+cap_index = len(future_notes)
+
 for i in range(length + 1):
     composition_parsed.append(prev_note)
     index = no_duplicates.index(prev_note)
-    if index == 139:
+    if index == cap_index:
         prev_note = random.choice(no_duplicates)
     else:
         prev_note = random.choice(future_notes[index])
@@ -66,6 +68,9 @@ with MidiFile() as output:
     track = mido.MidiTrack()
 
     for i in range(len(composition_parsed)):
+        if composition_parsed[i][1] > 127:
+            composition_parsed[i][1] = 127 # prevent invalid values
+        
         if composition_parsed[i][0] > 75:
             track.append(mido.Message('note_on', note = composition_parsed[i][0], velocity = composition_parsed[i][1], time = 1))
         
