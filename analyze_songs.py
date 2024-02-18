@@ -4,7 +4,7 @@ import mido
 import copy
 import pygame
 
-mid = MidiFile('river_flows_in_you.mid')
+mid = MidiFile('./river_flows_in_you.mid')
 
 tracks = [[] for track in enumerate(mid.tracks)]
 
